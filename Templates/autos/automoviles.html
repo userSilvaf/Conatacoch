@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="container-fluid mt-5 mb-5">
+
+    <div class="row">
+        <div class="col">
+
+            <!-- Encabezado -->
+
+            <div class="row mb-3">
+
+                <div class="col-8">
+                    <h2>Listado de Automóviles</h2>
+                </div>
+
+                <div class="col-4 text-end">
+                    {% if user.is_authenticated %}
+                        <a class="btn btn-success btn-sm"
+                           href="{% url 'crearAutomovil' %}">
+                            Agregar Automóvil
+                        </a>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <!-- Tabla de automóviles -->
+
+            <div class="table-responsive">
+
+                <table class="table table-dark table-hover table-striped">
+
+                    <thead>
+
+                        <tr>
+                            <th rowspan="2">#</th>
+                            <th rowspan="2">Patente</th>
+                            <th rowspan="2">Marca</th>
+                            <th rowspan="2">Modelo</th>
+                            <th rowspan="2">Año</th>
+                            <th rowspan="2">Combustible</th>
+
+                            <th colspan="3" class="text-center">
+                                Permiso de circulación
+                            </th>
+
+                            <th colspan="3" class="text-center">
+                                Revisión técnica
+                            </th>
+
+                            <th colspan="3" class="text-center">
+                                Seguro obligatorio
+                            </th>
+
+                            {% if user.is_authenticated %}
+                                <th rowspan="2">Acciones</th>
+                            {% endif %}
+
+                        </tr>
+
+                        <tr>
+
+                            <!-- Permiso de circulación -->
+
+                            <th>Comuna</th>
+                            <th>Otorgación</th>
+                            <th>Vencimiento</th>
+
+                            <!-- Revisión técnica -->
+
+                            <th>Planta</th>
+                            <th>Comuna</th>
+                            <th>Vencimiento</th>
+
+                            <!-- Seguro obligatorio -->
+
+                            <th>Compañía</th>
+                            <th>Prima</th>
+                            <th>Vencimiento</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for automovil in automoviles %}
+
+                            <tr>
+
+                                <td>{{ forloop.counter }}</td>
+
+                                <!-- Datos generales -->
+
+                                <td>{{ automovil.patente }}</td>
+                                <td>{{ automovil.marca }}</td>
+                                <td>{{ automovil.modelo }}</td>
+                                <td>{{ automovil.anio }}</td>
+                                <td>{{ automovil.get_combustible_display }}</td>
+
+                                <!-- Permiso de circulación -->
+
+                                <td>{{ automovil.permiso_comuna }}</td>
+
+                                <td>
+                                    {{ automovil.permiso_fecha_otorgacion|date:"d/m/Y" }}
+                                </td>
+
+                                <td>
+                                    {{ automovil.permiso_vencimiento|date:"d/m/Y" }}
+                                </td>
+
+                                <!-- Revisión técnica -->
+
+                                <td>{{ automovil.revision_planta }}</td>
+                                <td>{{ automovil.revision_comuna }}</td>
+
+                                <td>
+                                    {{ automovil.revision_vencimiento|date:"d/m/Y" }}
+                                </td>
+
+                                <!-- Seguro obligatorio -->
+
+                                <td>{{ automovil.seguro_compania }}</td>
+
+                                <td>
+                                    {{ automovil.seguro_prima|floatformat:2 }}
+                                </td>
+
+                                <td>
+                                    {{ automovil.seguro_vencimiento|date:"d/m/Y" }}
+                                </td>
+
+                                <!-- Acciones -->
+
+                                {% if user.is_authenticated %}
+
+                                    <td class="text-nowrap">
+
+                                        <a class="btn btn-warning btn-sm"
+                                           href="{% url 'editarAutomovil' automovil.id %}">
+                                            Modificar
+                                        </a>
+
+                                        <a class="btn btn-danger btn-sm"
+                                           href="{% url 'eliminarAutomovil' automovil.id %}">
+                                            Eliminar
+                                        </a>
+
+                                    </td>
+
+                                {% endif %}
+
+                            </tr>
+
+                        {% empty %}
+
+                            <tr>
+                                <td colspan="{% if user.is_authenticated %}16{% else %}15{% endif %}"
+                                    class="text-center">
+
+                                    No hay automóviles registrados.
+
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col">
+                <div class="row mb-3">
+                    <div class="col-9">
+                        <div class="h2">Listado de Conductores</div>
+                    </div>
+                    <div class="col-3 text-end">
+                        {% if user.is_authenticated %}
+                            <a class="btn btn-success btn-sm" href="{% url 'crearConductor' %}">
+                                Agregar Conductor
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>RUT</th>
+                                <th>Nombre completo</th>
+                                <th>Dirección</th>
+                                <th>Teléfono celular</th>
+                                <th>Tipo de licencia</th>
+
+                                {% if user.is_authenticated %}
+                                    <th>Acciones</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for conductor in conductores %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ conductor.rut }}</td>
+                                    <td>{{ conductor.nombre_completo }}</td>
+                                    <td>{{ conductor.direccion }}</td>
+                                    <td>{{ conductor.fono_celular }}</td>
+                                    <td>{{ conductor.tipo_licencia }}</td>
+
+                                    {% if user.is_authenticated %}
+                                        <td>
+                                            <a class="btn btn-warning btn-sm"
+                                               href="{% url 'editarConductor' conductor.rut %}">
+                                                Modificar
+                                            </a>
+
+                                            <a class="btn btn-danger btn-sm"
+                                               href="{% url 'eliminarConductor' conductor.rut %}">
+                                                Eliminar
+                                            </a>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="{% if user.is_authenticated %}7{% else %}6{% endif %}"
+                                        class="text-center">
+                                        No hay conductores registrados.
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

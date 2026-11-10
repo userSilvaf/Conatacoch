@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block titulo %}Administración - CONATACOCH{% endblock %}
+
+{% block contenido %}
+
+<div class="container py-5">
+
+    <div class="row">
+        <div class="col">
+
+            <h2>Administración de CONATACOCH</h2>
+
+            <p>
+                Bienvenido al sistema de administración.
+                Desde aquí podrá gestionar la información de los conductores
+                y automóviles.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2">
+
+                <a class="btn btn-primary" href="{% url 'conductores' %}">
+                    Ver conductores
+                </a>
+
+                <a class="btn btn-success" href="{% url 'crearConductor' %}">
+                    Registrar conductor
+                </a>
+
+                <a class="btn btn-primary" href="{% url 'automoviles' %}">
+                    Ver automóviles
+                </a>
+
+                <a class="btn btn-success" href="{% url 'crearAutomovil' %}">
+                    Registrar automóvil
+                </a>
+
+                <a class="btn btn-dark" href="{% url 'admin:index' %}">
+                    Panel de administración
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

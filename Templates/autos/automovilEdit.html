@@ -1,0 +1,166 @@
+
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="container mt-5 mb-5">
+
+    <h2 class="mb-4">Editar automóvil</h2>
+
+    <form method="POST" action="{% url 'automovilEditado' automovil.id %}">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        <!-- Datos generales -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Datos generales</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.marca.label_tag }}
+                        {{ form.marca }}
+                        {{ form.marca.errors }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.modelo.label_tag }}
+                        {{ form.modelo }}
+                        {{ form.modelo.errors }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.anio.label_tag }}
+                        {{ form.anio }}
+                        {{ form.anio.errors }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.combustible.label_tag }}
+                        {{ form.combustible }}
+                        {{ form.combustible.errors }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.patente.label_tag }}
+                        {{ form.patente }}
+                        {{ form.patente.errors }}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Permiso de circulación -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Permiso de circulación</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.permiso_comuna.label_tag }}
+                        {{ form.permiso_comuna }}
+                        {{ form.permiso_comuna.errors }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.permiso_fecha_otorgacion.label_tag }}
+                        {{ form.permiso_fecha_otorgacion }}
+                        {{ form.permiso_fecha_otorgacion.errors }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.permiso_vencimiento.label_tag }}
+                        {{ form.permiso_vencimiento }}
+                        {{ form.permiso_vencimiento.errors }}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Revisión técnica -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Revisión técnica</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.revision_planta.label_tag }}
+                        {{ form.revision_planta }}
+                        {{ form.revision_planta.errors }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.revision_comuna.label_tag }}
+                        {{ form.revision_comuna }}
+                        {{ form.revision_comuna.errors }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.revision_vencimiento.label_tag }}
+                        {{ form.revision_vencimiento }}
+                        {{ form.revision_vencimiento.errors }}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Seguro obligatorio -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Seguro obligatorio</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.seguro_compania.label_tag }}
+                        {{ form.seguro_compania }}
+                        {{ form.seguro_compania.errors }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.seguro_prima.label_tag }}
+                        {{ form.seguro_prima }}
+                        {{ form.seguro_prima.errors }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.seguro_vencimiento.label_tag }}
+                        {{ form.seguro_vencimiento }}
+                        {{ form.seguro_vencimiento.errors }}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex gap-2">
+            <a href="{% url 'automoviles' %}" class="btn btn-secondary">
+                Volver
+            </a>
+
+            <button type="submit" class="btn btn-primary">
+                Guardar cambios
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

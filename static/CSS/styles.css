@@ -1,0 +1,255 @@
+
+/* -------- ESTILOS GENERALES -------- */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #222;
+    background-color: #fff;
+}
+
+main {
+    min-height: 60vh;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: bold;
+}
+
+
+/* -------- NAVBAR -------- */
+
+.navbar {
+    padding: 12px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.navbar-brand img {
+    width: 230px;
+    max-width: 100%;
+    height: auto;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    font-size: 1rem;
+    padding: 10px 15px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #0d6efd;
+}
+
+
+/* -------- PORTADA -------- */
+
+.portada {
+    background: linear-gradient(120deg, #263f55, #426b87);
+    color: #fff;
+    min-height: 450px;
+    display: flex;
+    align-items: center;
+}
+
+.portada-contenido {
+    max-width: 750px;
+    padding: 60px 0;
+}
+
+.portada h1 {
+    font-size: 2.8rem;
+    font-weight: bold;
+}
+
+.portada p {
+    font-size: 1.1rem;
+    margin: 20px 0;
+    line-height: 1.7;
+}
+
+
+/* -------- NOTICIAS -------- */
+
+.noticias {
+    padding-top: 45px;
+    padding-bottom: 45px;
+}
+
+.noticias h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.noticias .card {
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.noticias .card-img-top {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.noticias .card-title {
+    font-size: 1.15rem;
+    font-weight: bold;
+}
+
+.noticias .card-text {
+    color: #555;
+    line-height: 1.5;
+}
+
+
+/* -------- SOBRE CONATACOCH -------- */
+
+.sobre-nosotros {
+    background-color: #f5f6f7;
+}
+
+.sobre-nosotros h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.sobre-nosotros p {
+    color: #555;
+    line-height: 1.7;
+}
+
+.sobre-nosotros img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+
+/* -------- FOOTER -------- */
+
+footer {
+    background-color: #263f55;
+    color: #fff;
+    padding: 25px 0;
+}
+
+footer p {
+    margin-bottom: 5px;
+}
+
+
+/* -------- LOGIN -------- */
+
+.login-card {
+    border-radius: 10px;
+}
+
+.login-logo {
+    width: 100%;
+    max-width: 500px;
+    height: 220px;
+    object-fit: contain;
+}
+
+.login-card h3 {
+    font-size: 1.7rem;
+}
+
+.login-card form p {
+    margin-bottom: 22px;
+}
+
+.login-card form label {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.login-card form input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.login-card form input:focus {
+    outline: none;
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+
+/* -------- FORMULARIOS CRUD -------- */
+
+form .form-control {
+    margin-top: 5px;
+}
+
+form label {
+    font-weight: 500;
+}
+
+form .form-control:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+
+/* -------- TABLAS CRUD -------- */
+
+.table-responsive {
+    margin-top: 15px;
+}
+
+.table {
+    vertical-align: middle;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+}
+
+
+/* -------- RESPONSIVE -------- */
+
+@media (max-width: 767px) {
+
+    .navbar-brand img {
+        width: 180px;
+    }
+
+    .portada {
+        min-height: 380px;
+    }
+
+    .portada-contenido {
+        padding: 45px 15px;
+    }
+
+    .portada h1 {
+        font-size: 2.1rem;
+    }
+
+    .portada p {
+        font-size: 1rem;
+    }
+
+    .noticias h2,
+    .sobre-nosotros h2 {
+        font-size: 1.7rem;
+    }
+
+    .noticias .card-img-top {
+        height: 200px;
+    }
+
+    .login-logo {
+        height: 160px;
+    }
+}

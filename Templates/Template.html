@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block contenido %}
+
+<!-- PORTADA -->
+<header class="portada">
+    <div class="container">
+        <div class="portada-contenido">
+            <h1>Confederación Nacional de Taxis Colectivos de Chile</h1>
+
+            <p>
+                Representamos y defendemos los intereses de los
+                conductores y operadores de taxis colectivos en Chile.
+            </p>
+
+            <a href="#sobre-nosotros" class="btn btn-primary">
+                Conocer más
+            </a>
+        </div>
+    </div>
+</header>
+
+
+<!-- NOTICIAS -->
+<section class="noticias container py-5">
+
+    <h2 class="text-center mb-4">Noticias y actualidad</h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card h-100">
+
+                <img src="{% static 'imagenes/2026-10-27-19.27.01-1-scaled.jpg' %}"
+                     class="card-img-top"
+                     alt="Premio Emprendedor CONATACOCH">
+
+                <div class="card-body">
+                    <h5 class="card-title">
+                        PREMIO EMPRENDEDOR CONATACOCH – BANCO ESTADO
+                    </h5>
+
+                    <p class="card-text">
+                        Los grandes sueños también se construyen
+                        kilómetro a kilómetro. Reconocemos a nuestra
+                        socia Claudia Risco Cuevas, emprendedora
+                        de Magallanes.
+                    </p>
+
+                    <a href="https://conatacoch.cl/documentos/premio-emprendedor-conatacoch-banco-estado/"
+                       target="_blank"
+                       class="btn btn-primary">
+                        Quiero saber más
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="card h-100">
+
+                <img src="{% static 'imagenes/212.jpeg' %}"
+                     class="card-img-top"
+                     alt="Decreto 212">
+
+                <div class="card-body">
+                    <h5 class="card-title">
+                        MODIFICACIONES AL DECRETO 212
+                    </h5>
+
+                    <p class="card-text">
+                        Informamos sobre las modificaciones y
+                        novedades relacionadas con el Decreto Supremo 212.
+                    </p>
+
+                    <a href="https://conatacoch.cl/documentos/modificaciones-al-decreto-212/"
+                       target="_blank"
+                       class="btn btn-primary">
+                        Quiero saber más
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="card h-100">
+
+                <img src="{% static 'imagenes/WhatsApp-Image-2026-06-23-at-11.15.04-2.jpeg' %}"
+                     class="card-img-top"
+                     alt="Actividades de CONATACOCH">
+
+                <div class="card-body">
+                    <h5 class="card-title">
+                        AGRADECIMIENTOS AMPLIADO CONATACOCH 2026
+                    </h5>
+
+                    <p class="card-text">
+                        Información y actividades relacionadas con
+                        nuestra Confederación.
+                    </p>
+
+                    <a href="https://conatacoch.cl/prensa/agradecimientos-ampliado-conatacoch-2026/"
+                       target="_blank"
+                       class="btn btn-primary">
+                        Quiero saber más
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- SOBRE CONATACOCH -->
+<section class="sobre-nosotros py-5" id="sobre-nosotros">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-6">
+
+                <h2>Sobre nuestra Confederación</h2>
+
+                <p>
+                    CONATACOCH (Confederación Nacional de Taxis Colectivos
+                    de Chile) es una organización gremial que representa
+                    y defiende los intereses de los conductores y
+                    operadores de taxis colectivos en Chile.
+                </p>
+
+                <p>
+                    Su labor incluye la gestión y promoción de políticas
+                    públicas favorables, la capacitación de sus asociados
+                    y la lucha por una fiscalización justa y equitativa
+                    en el sector del transporte.
+                </p>
+
+                <p>
+                    Además, CONATACOCH trabaja para asegurar que sus
+                    miembros reciban beneficios y subsidios adecuados,
+                    y para mantenerlos informados sobre cambios y
+                    desarrollos relevantes en la industria.
+                </p>
+
+            </div>
+
+            <div class="col-md-6 text-center">
+
+                <img src="{% static 'imagenes/IMG_5997.jpg' %}"
+                     class="img-fluid"
+                     alt="CONATACOCH">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+```
