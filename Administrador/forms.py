@@ -1,5 +1,5 @@
 from django import forms
-from Administrador.models import Conductor, Automovil
+from Administrador.models import Conductor, Automovil, Recorrido
 
 
 class ConductorForm(forms.ModelForm):
@@ -39,9 +39,10 @@ class ConductorForm(forms.ModelForm):
     fono_domicilio = forms.CharField(
     max_length=9,
     min_length=9,
+    required=False,
     widget=forms.TextInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Ej: 223456789',
+        'placeholder': 'Opcional',
         'maxlength': '9',
         'pattern': '[0-9]{9}'
         })
@@ -101,7 +102,7 @@ class AutomovilForm(forms.ModelForm):
 
     class Meta:
         model = Automovil
-        fields = '__all__'
+        exclude = ['recorrido']
 
         widgets = {
 
@@ -191,3 +192,45 @@ class AutomovilForm(forms.ModelForm):
         patente = self.cleaned_data['patente']
         return patente.strip().upper().replace(' ', '')
 
+#--------- FORMULARIO ASIGNACION DE RECORRIDOS -------------------
+
+class RecorridoAsignacionForm(forms.ModelForm):
+
+    recorrido = forms.ModelChoiceField(
+        queryset=Recorrido.objects.all(),
+        required=False,
+        widget=forms.HiddenInput(),
+        label='Recorrido'
+    )
+
+    class Meta:
+        model = Automovil
+        fields = ['recorrido']
+
+#--------- FORMULARIO ASIGNACION DE CONDUCTORES -------------------
+
+class ConductorAsignacionForm(forms.ModelForm):
+
+    conductor = forms.ModelChoiceField(
+        queryset=Conductor.objects.all(),
+        required=False,
+        widget=forms.HiddenInput(),
+        label='Conductor'
+    )
+
+    class Meta:
+        model = Automovil
+        fields = ['conductor']
+
+
+#--------- FORMULARIO ASIGNACION DE AUTOMOVILES -------------------
+
+class AutomovilAsignacionForm(forms.Form):
+
+    automovil = forms.ModelChoiceField(
+        queryset=Automovil.objects.none(),
+        widget=forms.Select(attrs={
+            'class': 'form-control'
+        }),
+        label='Seleccionar automóvil'
+    )

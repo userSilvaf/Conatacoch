@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="h2 mb-4">Asignar automóvil</div>
+
+                <p>
+                    Conductor: <strong>{{ conductor.nombre_completo }}</strong>
+                </p>
+
+                <p>
+                    RUT: {{ conductor.rut }}
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Seleccionar automóvil
+                        </label>
+
+                        {{ form.automovil }}
+
+                        {% if form.automovil.errors %}
+                            <div class="text-danger">
+                                {{ form.automovil.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-success">
+                        Guardar asignación
+                    </button>
+
+                    <a href="{% url 'conductores' %}" class="btn btn-secondary">
+                        Volver
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

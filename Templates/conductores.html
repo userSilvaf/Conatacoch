@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block contenido %}
@@ -27,6 +28,7 @@
                                 <th>Dirección</th>
                                 <th>Teléfono celular</th>
                                 <th>Tipo de licencia</th>
+                                <th>Automóvil asignado</th>
 
                                 {% if user.is_authenticated %}
                                     <th>Acciones</th>
@@ -42,6 +44,13 @@
                                     <td>{{ conductor.direccion }}</td>
                                     <td>{{ conductor.fono_celular }}</td>
                                     <td>{{ conductor.tipo_licencia }}</td>
+                                    <td>
+                                        {% if conductor.automovil %}
+                                            {{ conductor.automovil.patente }}
+                                        {% else %}
+                                            <span class="text-warning">Sin automóvil asignado</span>
+                                        {% endif %}
+                                    </td>
 
                                     {% if user.is_authenticated %}
                                         <td>
@@ -49,6 +58,26 @@
                                                href="{% url 'editarConductor' conductor.rut %}">
                                                 Modificar
                                             </a>
+
+                                            <a class="btn btn-primary btn-sm"
+                                               href="{% url 'asignarAutomovil' conductor.rut %}">
+                                                {% if conductor.automovil %}
+                                                    Cambiar automóvil
+                                                {% else %}
+                                                    Asignar automóvil
+                                                {% endif %}
+                                            </a>
+
+                                            {% if conductor.automovil %}
+                                                <form method="post"
+                                                      action="{% url 'quitarAutomovil' conductor.rut %}"
+                                                      class="d-inline">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-secondary btn-sm">
+                                                        Quitar automóvil
+                                                    </button>
+                                                </form>
+                                            {% endif %}
 
                                             <a class="btn btn-danger btn-sm"
                                                href="{% url 'eliminarConductor' conductor.rut %}">
@@ -59,7 +88,7 @@
                                 </tr>
                             {% empty %}
                                 <tr>
-                                    <td colspan="{% if user.is_authenticated %}7{% else %}6{% endif %}"
+                                    <td colspan="{% if user.is_authenticated %}8{% else %}7{% endif %}"
                                         class="text-center">
                                         No hay conductores registrados.
                                     </td>

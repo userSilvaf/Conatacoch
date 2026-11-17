@@ -33,6 +33,7 @@ class Conductor(models.Model):
 
     fono_domicilio = models.CharField(
         max_length=9,
+        blank=True,
         verbose_name='Fono domicilio'
     )
 
@@ -115,6 +116,29 @@ class Automovil(models.Model):
         verbose_name='Patente'
     )
 
+    # Conductor asignado al automóvil
+
+    conductor = models.OneToOneField(
+        'Conductor',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='automovil',
+        verbose_name='Conductor asignado'
+    )
+
+    # Recorrido asignado al automóvil
+
+    recorrido = models.ForeignKey(
+        'Recorrido',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='automoviles',
+        verbose_name='Recorrido asignado'
+    )
+
+
     # Permiso de circulación
 
     permiso_comuna = models.CharField(
@@ -189,3 +213,82 @@ class Automovil(models.Model):
         verbose_name = 'Automóvil'
         verbose_name_plural = 'Automóviles'
         ordering = ['patente']
+
+
+#--------- MODELO RECORRIDO -------------------
+
+class Recorrido(models.Model):
+
+    region = models.PositiveSmallIntegerField(
+        verbose_name='Región'
+    )
+
+    folio = models.PositiveIntegerField(
+        verbose_name='Folio'
+    )
+
+    tipo_servicio = models.CharField(
+        max_length=50,
+        verbose_name='Tipo de servicio'
+    )
+
+    nombre_recorrido = models.CharField(
+        max_length=120,
+        verbose_name='Nombre del recorrido'
+    )
+
+    tipo_trazado = models.CharField(
+        max_length=20,
+        verbose_name='Tipo de trazado'
+    )
+
+    nombre_origen = models.CharField(
+        max_length=100,
+        verbose_name='Nombre del origen'
+    )
+
+    comuna_origen = models.CharField(
+        max_length=30,
+        blank=True,
+        null=True,
+        verbose_name='Comuna de origen'
+    )
+
+    domicilio_origen = models.CharField(
+        max_length=180,
+        blank=True,
+        null=True,
+        verbose_name='Domicilio de origen'
+    )
+
+    nombre_destino = models.CharField(
+        max_length=100,
+        verbose_name='Nombre del destino'
+    )
+
+    comuna_destino = models.CharField(
+        max_length=30,
+        blank=True,
+        null=True,
+        verbose_name='Comuna de destino'
+    )
+
+    domicilio_destino = models.CharField(
+        max_length=120,
+        blank=True,
+        null=True,
+        verbose_name='Domicilio de destino'
+    )
+
+    def __str__(self):
+        return (
+            f'Región {self.region} - '
+            f'Folio {self.folio} - '
+            f'{self.nombre_recorrido}'
+        )
+
+    class Meta:
+        db_table = 'recorrido'
+        verbose_name = 'Recorrido'
+        verbose_name_plural = 'Recorridos'
+        ordering = ['region', 'folio', 'nombre_recorrido']

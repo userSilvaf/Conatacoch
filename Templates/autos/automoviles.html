@@ -26,6 +26,211 @@
 
             </div>
 
+            <!-- Formulario de asignación de recorridos -->
+
+            {% if recorrido_form %}
+
+                <div class="card mb-4">
+                    <div class="card-body">
+
+                        <h4>
+                            Asignar recorrido al automóvil
+                            {{ automovil_seleccionado.patente }}
+                        </h4>
+
+                        <form method="POST"
+                              action="{% url 'asignarRecorrido' automovil_seleccionado.id %}">
+
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+
+                                <label for="buscarRecorrido" class="form-label">
+                                    Buscar recorrido
+                                </label>
+
+                                {{ recorrido_form.recorrido }}
+
+                                <input
+                                    type="text"
+                                    id="buscarRecorrido"
+                                    name="busqueda_recorrido"
+                                    class="form-control"
+                                    placeholder="Buscar por región, folio, nombre o comuna..."
+                                    autocomplete="off"
+                                    value="{% if automovil_seleccionado.recorrido %}{{ automovil_seleccionado.recorrido }}{% endif %}"
+                                >
+
+                                <div class="form-text">
+                                    Escribe para buscar entre los recorridos disponibles.
+                                </div>
+
+                                <div
+                                    id="resultadosRecorridos"
+                                    class="list-group mt-2"
+                                    style="max-height: 300px; overflow-y: auto;"
+                                ></div>
+
+                                <div
+                                    id="recorridoSeleccionado"
+                                    class="alert alert-success mt-3"
+                                    style="display: none;"
+                                ></div>
+
+                                {% if recorrido_form.recorrido.errors %}
+                                    <div class="text-danger mt-2">
+                                        {{ recorrido_form.recorrido.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                Guardar recorrido
+                            </button>
+
+                            <a href="{% url 'automoviles' %}"
+                               class="btn btn-secondary">
+                                Cancelar
+                            </a>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <script>
+                document.addEventListener('DOMContentLoaded', function () {
+
+                    const buscador = document.getElementById('buscarRecorrido');
+                    const campoRecorrido = document.getElementById('id_recorrido');
+                    const resultados = document.getElementById('resultadosRecorridos');
+                    const seleccionado = document.getElementById('recorridoSeleccionado');
+
+                    if (!buscador || !campoRecorrido || !resultados) {
+                        return;
+                    }
+
+                    const urlBusqueda = "{% url 'buscarRecorridos' %}";
+
+                    let temporizador;
+
+                    function limpiarResultados() {
+                        resultados.innerHTML = '';
+                    }
+
+                    function seleccionarRecorrido(recorrido) {
+
+                        campoRecorrido.value = recorrido.id;
+                        buscador.value = recorrido.nombre;
+
+                        seleccionado.textContent =
+                            'Recorrido seleccionado: ' +
+                            recorrido.nombre +
+                            ' | ' +
+                            recorrido.detalle;
+
+                        seleccionado.style.display = 'block';
+
+                        limpiarResultados();
+                    }
+
+                    function mostrarResultados(recorridos) {
+
+                        limpiarResultados();
+
+                        if (recorridos.length === 0) {
+
+                            const mensaje = document.createElement('div');
+
+                            mensaje.className = 'list-group-item text-muted';
+                            mensaje.textContent = 'No se encontraron recorridos.';
+
+                            resultados.appendChild(mensaje);
+
+                            return;
+                        }
+
+                        recorridos.forEach(function (recorrido) {
+
+                            const opcion = document.createElement('button');
+
+                            opcion.type = 'button';
+                            opcion.className = 'list-group-item list-group-item-action';
+
+                            const nombre = document.createElement('strong');
+                            nombre.textContent = recorrido.nombre;
+
+                            const detalle = document.createElement('small');
+                            detalle.className = 'd-block text-muted';
+                            detalle.textContent = recorrido.detalle;
+
+                            opcion.appendChild(nombre);
+                            opcion.appendChild(detalle);
+
+                            opcion.addEventListener('click', function () {
+                                seleccionarRecorrido(recorrido);
+                            });
+
+                            resultados.appendChild(opcion);
+                        });
+                    }
+
+                    buscador.addEventListener('input', function () {
+
+                        clearTimeout(temporizador);
+
+                        const termino = buscador.value.trim();
+
+                        if (termino.length === 0) {
+
+                            campoRecorrido.value = '';
+                            seleccionado.style.display = 'none';
+                            limpiarResultados();
+
+                            return;
+                        }
+
+                        temporizador = setTimeout(function () {
+
+                            fetch(urlBusqueda + '?q=' + encodeURIComponent(termino))
+                                .then(function (respuesta) {
+
+                                    if (!respuesta.ok) {
+                                        throw new Error('Error al buscar recorridos.');
+                                    }
+
+                                    return respuesta.json();
+                                })
+                                .then(function (datos) {
+                                    mostrarResultados(datos.recorridos);
+                                })
+                                .catch(function (error) {
+
+                                    limpiarResultados();
+
+                                    const mensaje = document.createElement('div');
+                                    mensaje.className = 'list-group-item text-danger';
+                                    mensaje.textContent = error.message;
+
+                                    resultados.appendChild(mensaje);
+                                });
+
+                        }, 300);
+                    });
+
+                    if (campoRecorrido.value) {
+                        seleccionado.textContent =
+                            'Recorrido actualmente asignado: ' + buscador.value;
+
+                        seleccionado.style.display = 'block';
+                    }
+
+                });
+                </script>
+
+            {% endif %}
+
             <!-- Tabla de automóviles -->
 
             <div class="table-responsive">
@@ -53,6 +258,8 @@
                             <th colspan="3" class="text-center">
                                 Seguro obligatorio
                             </th>
+
+                            <th rowspan="2">Recorrido asignado</th>
 
                             {% if user.is_authenticated %}
                                 <th rowspan="2">Acciones</th>
@@ -133,6 +340,18 @@
                                     {{ automovil.seguro_vencimiento|date:"d/m/Y" }}
                                 </td>
 
+                                <!-- Recorrido asignado -->
+
+                                <td>
+                                    {% if automovil.recorrido %}
+                                        {{ automovil.recorrido }}
+                                    {% else %}
+                                        <span class="text-warning">
+                                            Sin recorrido asignado
+                                        </span>
+                                    {% endif %}
+                                </td>
+
                                 <!-- Acciones -->
 
                                 {% if user.is_authenticated %}
@@ -149,6 +368,34 @@
                                             Eliminar
                                         </a>
 
+                                        <hr>
+
+                                        <a class="btn btn-primary btn-sm"
+                                           href="{% url 'asignarRecorrido' automovil.id %}">
+                                            {% if automovil.recorrido %}
+                                                Cambiar recorrido
+                                            {% else %}
+                                                Asignar recorrido
+                                            {% endif %}
+                                        </a>
+
+                                        {% if automovil.recorrido %}
+
+                                            <form method="POST"
+                                                  action="{% url 'quitarRecorrido' automovil.id %}"
+                                                  class="d-inline">
+
+                                                {% csrf_token %}
+
+                                                <button type="submit"
+                                                        class="btn btn-secondary btn-sm">
+                                                    Quitar recorrido
+                                                </button>
+
+                                            </form>
+
+                                        {% endif %}
+
                                     </td>
 
                                 {% endif %}
@@ -158,7 +405,7 @@
                         {% empty %}
 
                             <tr>
-                                <td colspan="{% if user.is_authenticated %}16{% else %}15{% endif %}"
+                                <td colspan="{% if user.is_authenticated %}17{% else %}16{% endif %}"
                                     class="text-center">
 
                                     No hay automóviles registrados.

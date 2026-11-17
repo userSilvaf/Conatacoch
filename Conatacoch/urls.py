@@ -63,4 +63,38 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('accounts/', include('django.contrib.auth.urls')),
+
+        #--------- ASIGNACION DE RECORRIDOS -------------------
+
+    path(
+        'automovil/<int:automovil_id>/recorrido/',
+        views.asignar_recorrido,
+        name='asignarRecorrido'
+    ),
+
+    path(
+        'automovil/<int:automovil_id>/recorrido/quitar/',
+        views.quitar_recorrido,
+        name='quitarRecorrido'
+    ),
+
+    path(
+          'recorridos/buscar/',
+          views.buscar_recorridos,
+          name='buscarRecorridos'
+    ),
+
+            #--------- ASIGNACION DE AUTOMOVILES -------------------
+
+    path(
+        'conductor/<str:conductor_rut>/automovil/',
+        views.asignar_automovil,
+        name='asignarAutomovil'
+    ),
+
+    path(
+        'conductor/<str:conductor_rut>/automovil/quitar/',
+        views.quitar_automovil,
+        name='quitarAutomovil'
+    ),
 ]
